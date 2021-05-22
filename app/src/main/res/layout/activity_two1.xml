@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="@drawable/background1"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -14,12 +15,6 @@
         android:orientation="vertical"
         android:gravity="center"
         android:layout_weight="100">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:background="@drawable/background1">
 
             <TextView
                 android:id="@+id/tv"
@@ -38,7 +33,6 @@
                 android:text="оп"
                 tools:layout_editor_absoluteX="158dp"
                 tools:layout_editor_absoluteY="360dp" />
-        </RelativeLayout>
 
     </LinearLayout>
 
