@@ -15,17 +15,21 @@ import android.view.View;
 
 
 public class MyGr extends View {
+
     public static int height=1024, width=800;
     float x=100,y = 10, dy=0;
     float ground = 300;
     float gravity = 2;
     // картинка героя
-    Bitmap enemy,bitmap;
+    Bitmap enemy,bitmap,background;
     float xE=1600,yE = 460, dxE=-10;
+    float xB=1600,yB = 460, dxB=-10;
 
     public MyGr(Context context) {
         super(context);
         Resources resources = getContext().getResources();
+        background = BitmapFactory.decodeResource( resources,R.drawable.background1);
+        background = Bitmap.createScaledBitmap(background,width, height,true);
         bitmap = BitmapFactory.decodeResource( resources,R.drawable.mario1333);
         bitmap = Bitmap.createScaledBitmap(bitmap,width/8, height/4,true);
         enemy = BitmapFactory.decodeResource( resources,R.drawable.zombie);
@@ -43,6 +47,7 @@ public class MyGr extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Paint p = new Paint();
+        canvas.drawBitmap(background,xB,yB,pB);
         canvas.drawBitmap(bitmap,x,y,p);
         canvas.drawBitmap(enemy,xE,yE,p);
         move();
