@@ -7,11 +7,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
 
 
 public class MyGr extends View {
@@ -20,38 +23,45 @@ public class MyGr extends View {
     float x=100,y = 10, dy=0;
     float ground = 300;
     float gravity = 2;
+    float heroWidth, heroHeight;
+    float enemyWidth, enemyHeight;
     // картинка героя
     Bitmap enemy,bitmap,background;
+    MyTimer timer;
+
     float xE=1600,yE = 460, dxE=-10;
     float xB=1600,yB = 460, dxB=-10;
 
     public MyGr(Context context) {
         super(context);
-        Resources resources = getContext().getResources();
-        background = BitmapFactory.decodeResource( resources,R.drawable.background1);
-        background = Bitmap.createScaledBitmap(background,width, height,true);
-        bitmap = BitmapFactory.decodeResource( resources,R.drawable.mario1333);
-        bitmap = Bitmap.createScaledBitmap(bitmap,width/8, height/4,true);
-        enemy = BitmapFactory.decodeResource( resources,R.drawable.zombie);
-        enemy = Bitmap.createScaledBitmap(enemy,width/9, height/6,true);
-        MyTimer timer = new MyTimer(1000000, 20);
-        timer.start();
         DisplayMetrics metrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
         height = metrics.heightPixels;
         width = metrics.widthPixels;
+        int heroWidth = width/8;
+        int heroHeight = height/4;
+        int enemyWidth = width/9;
+        int enemyHeight = height/6;
+        Resources resources = getContext().getResources();
+        background = BitmapFactory.decodeResource( resources,R.drawable.background2);
+        background = Bitmap.createScaledBitmap(background,width, height,true);
+        bitmap = BitmapFactory.decodeResource( resources,R.drawable.mario1333);
+        bitmap = Bitmap.createScaledBitmap(bitmap,heroWidth, heroHeight,true);
+        enemy = BitmapFactory.decodeResource( resources,R.drawable.zombie);
+        enemy = Bitmap.createScaledBitmap(enemy,enemyWidth, enemyHeight,true);
+         timer = new MyTimer(1000000, 20);
+        timer.start();
 
     }
-
-    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         Paint p = new Paint();
-        canvas.drawBitmap(background,xB,yB,pB);
+        canvas.drawBitmap(background,0,0,p);
         canvas.drawBitmap(bitmap,x,y,p);
         canvas.drawBitmap(enemy,xE,yE,p);
         move();
         moveEnemy();
+        collision();
     }
 //движение героя
     public void move() {
@@ -64,8 +74,16 @@ public class MyGr extends View {
        xE+=dxE;
        if(xE<-100) xE=width;
     }
+   public void  collision(){
+       Log.d("tagg", "collision: "+x+" "+y+" "+(x+heroWidth));
+       Rect r1 = new Rect((int)x,(int)y,(int)(x+heroWidth),(int)(y+heroHeight));
+       Rect r2 = new  Rect((int)xE,(int)yE,(int)(xE+enemyWidth),(int)(yE+enemyHeight));
+       if(r1.intersect(r2)) {
+           timer.cancel();
+           Log.d("tagg", "collision: ");
+       }
 
-    @Override
+   }
     public boolean onTouchEvent(MotionEvent event) {
        if(y==ground) dy = -30;
         return true;
@@ -79,13 +97,11 @@ public class MyGr extends View {
 
         @Override
         public void onTick(long l) {
-
             invalidate();
         }
 
         @Override
         public void onFinish() {
-
         }
     }
 }
