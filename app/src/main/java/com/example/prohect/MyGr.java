@@ -38,17 +38,17 @@ public class MyGr extends View {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
         height = metrics.heightPixels;
         width = metrics.widthPixels;
-        int heroWidth = width/8;
-        int heroHeight = height/4;
-        int enemyWidth = width/9;
-        int enemyHeight = height/6;
+         heroWidth = width/8;
+         heroHeight = height/4;
+         enemyWidth = width/9;
+         enemyHeight = height/6;
         Resources resources = getContext().getResources();
         background = BitmapFactory.decodeResource( resources,R.drawable.background2);
         background = Bitmap.createScaledBitmap(background,width, height,true);
         bitmap = BitmapFactory.decodeResource( resources,R.drawable.mario1333);
-        bitmap = Bitmap.createScaledBitmap(bitmap,heroWidth, heroHeight,true);
+        bitmap = Bitmap.createScaledBitmap(bitmap,(int)heroWidth, (int) heroHeight,true);
         enemy = BitmapFactory.decodeResource( resources,R.drawable.zombie);
-        enemy = Bitmap.createScaledBitmap(enemy,enemyWidth, enemyHeight,true);
+        enemy = Bitmap.createScaledBitmap(enemy,(int)enemyWidth, (int)enemyHeight,true);
          timer = new MyTimer(1000000, 20);
         timer.start();
 
@@ -60,7 +60,7 @@ public class MyGr extends View {
         canvas.drawBitmap(bitmap,x,y,p);
         canvas.drawBitmap(enemy,xE,yE,p);
         move();
-        moveEnemy();
+       moveEnemy();
         collision();
     }
 //движение героя
@@ -75,12 +75,14 @@ public class MyGr extends View {
        if(xE<-100) xE=width;
     }
    public void  collision(){
-       Log.d("tagg", "collision: "+x+" "+y+" "+(x+heroWidth));
+       //Log.d("tagg", "collision: "+x+" "+y+" "+(heroWidth));
+
        Rect r1 = new Rect((int)x,(int)y,(int)(x+heroWidth),(int)(y+heroHeight));
        Rect r2 = new  Rect((int)xE,(int)yE,(int)(xE+enemyWidth),(int)(yE+enemyHeight));
+       Log.d("tagg", ""+r1.intersect(r2));
        if(r1.intersect(r2)) {
            timer.cancel();
-           Log.d("tagg", "collision: ");
+         //  Log.d("tagg", "collision: ");
        }
 
    }
