@@ -9,9 +9,5 @@
     android:background="@drawable/background1"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/background1"/>
+
 </LinearLayout>

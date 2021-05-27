@@ -62,6 +62,8 @@ public class MyGr extends View {
         move();
        moveEnemy();
         collision();
+
+
     }
 //движение героя
     public void move() {
@@ -105,5 +107,7 @@ public class MyGr extends View {
         @Override
         public void onFinish() {
         }
+
+
     }
 }

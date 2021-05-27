@@ -30,4 +30,6 @@ Button bt;
     public void start(View view) {
         setContentView( new MyGr(this));
     }
+
+    
 }

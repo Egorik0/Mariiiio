@@ -1,6 +1,7 @@
 package com.example.prohect;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 public class Player {
@@ -19,6 +20,11 @@ public class Player {
         Paint p = new Paint();
         canvas.drawCircle(x,y,r,p);
         move();
+        int score=0;
+        score++;
+        p.setTextSize(28);
+        p.setColor(Color.BLUE);
+        canvas.drawText(score+"",200,200,p);
     }
     public void move(){
         x+=dx; y+=dy;
@@ -32,5 +38,6 @@ public class Player {
         if(x-r<0 || x+r> MyGr.width) dx=-dx;
         if(y-r<0 || y+r> MyGr.height) dy=-dy;
     }
+
 }
 
