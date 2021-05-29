@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -21,8 +22,8 @@ public class MyGr extends View {
 
     public static int height=1024, width=800;
     float x=100,y = 10, dy=0;
-    float ground = 300;
-    float gravity = 2;
+    float ground = 400;
+    float gravity = 1;
     float heroWidth, heroHeight;
     float enemyWidth, enemyHeight;
     // картинка героя
@@ -38,10 +39,10 @@ public class MyGr extends View {
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
         height = metrics.heightPixels;
         width = metrics.widthPixels;
-         heroWidth = width/8;
-         heroHeight = height/4;
-         enemyWidth = width/9;
-         enemyHeight = height/6;
+         heroWidth = width/10;
+         heroHeight = height/7;
+         enemyWidth = width/20;
+         enemyHeight = height/10;
         Resources resources = getContext().getResources();
         background = BitmapFactory.decodeResource( resources,R.drawable.background2);
         background = Bitmap.createScaledBitmap(background,width, height,true);
@@ -62,7 +63,11 @@ public class MyGr extends View {
         move();
        moveEnemy();
         collision();
-
+        int score=0;
+        score++;
+        p.setTextSize(32);
+        p.setColor(Color.GREEN);
+        canvas.drawText(score+"",200,200,p);
 
     }
 //движение героя
